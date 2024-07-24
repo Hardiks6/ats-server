@@ -1,38 +1,25 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-require('dotenv').config();
+const dotenv = require('dotenv').config();
+import express from 'express';
+import bodyParser from 'body-parser';
+import routes from './src/routes';
+import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
 
-// Use CORS middleware
+// setting middleware
+app.use(morgan("dev"));
+
 app.use(cors({
-  origin: 'http://localhost:5173'
+    origin: '*',
+    method: "*"
 }));
 
-// Setup server port
-const port = process.env.PORT || 5000;
+app.use(bodyParser.json({ limit: "500mb" }));
+app.use(bodyParser.urlencoded({ limit: "500mb", extended: true, parameterLimit: 100000 }));
 
-// Parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+routes(app);
 
-// Parse requests of content-type - application/json
-app.use(bodyParser.json());
+let port = process.env.NODE_PORT || 5001;
 
-// Define a root route
-app.get('/', (req, res) => {
-  res.send('Welcome to the root route!');
-});
-
-// Use employee router for requests starting with /employees
-const employeeRoutes = require('./routes/employee.routes');
-app.use('/api/v1/employees', employeeRoutes);
-
-// Use user router for requests starting with /users
-const userRoutes = require('./routes/user.routes');
-app.use('/api/v1/users', userRoutes);
-
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
-
+app.listen(port, () => console.log('Server running on http://localhost:' + port + '/'));
