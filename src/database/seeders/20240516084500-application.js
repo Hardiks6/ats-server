@@ -16,3 +16,4 @@ module.exports = {
     await queryInterface.bulkDelete('applications', null, {});
   }
 };
+  

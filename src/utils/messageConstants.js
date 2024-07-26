@@ -16,6 +16,7 @@ export default {
     INVALID_PARAMETERS: "Invalid parameters.",
     EMAIL_ALREADY_REGISTERED: "The email address already registered.",
     CONTACT_NUMBER_ALREADY_REGISTERED: "The mobile number already registered.",
+    PROFILE_IMAGE_REQUIRED: "Profile image is required.",
     // REGISTER: API Validation Error Message
 
     // API General error message
